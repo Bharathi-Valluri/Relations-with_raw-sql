@@ -61,11 +61,14 @@ const dataUpdation = async (req, res) => {
 }
 const dataDeletion = async (req, res) => {
   try {
-    const resp = await client.query(`DELETE employees,contacts FROM employees
-        INNER JOIN
-    contacts ON contacts.contact_id = employees.employee_id 
-WHERE
-    employees.employee_id = ${req.body.employee_id}`)
+    //     const resp = await client.query(`DELETE employees,contacts FROM employees
+    //         INNER JOIN
+    //     contacts ON contacts.contact_id = employees.employee_id
+    // WHERE
+    //     employees.employee_id = ${req.body.employee_id}`)
+    const resp = await client.query(
+      `DELETE  FROM contacts  WHERE employee_id = ${req.body.employee_id};DELETE  FROM employees  WHERE employee_id = ${req.body.employee_id};`
+    )
     console.log(resp)
     res.status(200).json({
       response: resp,
