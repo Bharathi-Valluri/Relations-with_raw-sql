@@ -22,6 +22,24 @@ const dataInsertion = async (req, res) => {
     })
   }
 }
+const getOneRecord = async (req, res) => {
+  try {
+    const resp = await client.query(
+      `SELECT * FROM employees NATURAL JOIN contacts
+      WHERE employee_id =${req.body.employee_id}`
+    )
+    res.status(200).json({
+      response: resp,
+      message: 'Data inserted into db successfully!....'
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({
+      response: null,
+      message: 'Failed to fetch the records!...'
+    })
+  }
+}
 const getAllRecords = async (req, res) => {
   try {
     const resp = await client.query(
@@ -78,4 +96,10 @@ const dataDeletion = async (req, res) => {
   }
 }
 
-module.exports = { dataInsertion, getAllRecords, dataUpdation, dataDeletion }
+module.exports = {
+  dataInsertion,
+  getOneRecord,
+  getAllRecords,
+  dataUpdation,
+  dataDeletion
+}
